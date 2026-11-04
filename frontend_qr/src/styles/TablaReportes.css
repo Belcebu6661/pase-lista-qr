@@ -1,0 +1,399 @@
+/* TablaReportes.css */
+
+.tabla-container {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #e8eef7;
+  box-shadow: 0 4px 12px rgba(0, 20, 40, 0.04);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== HEADER ===== */
+.tabla-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.8rem;
+  background: #f8fbff;
+  border-bottom: 1px solid #e8eef7;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.tabla-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0b2b4a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tabla-header h2 i {
+  color: #2a7de1;
+  font-size: 1.2rem;
+}
+
+.registros-badge {
+  background: #eef4ff;
+  padding: 0.4rem 1.2rem;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1f5fbd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.registros-badge i {
+  color: #2a7de1;
+}
+
+/* ===== TABLA ===== */
+.tabla-scroll {
+  overflow-x: auto;
+  padding: 0 0.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 700px;
+}
+
+/* Cabecera */
+table thead {
+  background: #f2f8ff;
+}
+
+table thead th {
+  text-align: left;
+  padding: 0.9rem 1.2rem;
+  font-weight: 700;
+  color: #1a3457;
+  letter-spacing: 0.3px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid #dae5f2;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: #f2f8ff;
+  z-index: 10;
+}
+
+/* Celdas */
+table tbody td {
+  padding: 0.85rem 1.2rem;
+  border-bottom: 1px solid #eef3f9;
+  color: #1d3557;
+  vertical-align: middle;
+}
+
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table tbody tr {
+  transition: background 0.15s ease;
+}
+
+table tbody tr:hover {
+  background: #f8fbff;
+}
+
+/* ===== COLUMNAS ESPECÍFICAS ===== */
+.col-index {
+  text-align: center;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  width: 50px;
+}
+
+.col-matricula {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #1a3457;
+  font-size: 0.85rem;
+}
+
+.col-alumno .nombre-alumno {
+  font-weight: 500;
+  color: #0b2b4a;
+}
+
+.col-grupo .grupo-badge {
+  background: #eef4ff;
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1a5fc7;
+  display: inline-block;
+}
+
+.col-materia {
+  color: #3d5779;
+  font-weight: 500;
+}
+
+.col-fecha {
+  font-size: 0.8rem;
+  color: #5a7a9e;
+  white-space: nowrap;
+}
+
+.col-fecha .fecha-icon {
+  margin-right: 6px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+/* ===== ESTADO BADGE ===== */
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.3rem 1rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.estado-badge i {
+  font-size: 0.8rem;
+}
+
+/* Colores de estado */
+.estado-presente {
+  background: #d9f0e1;
+  color: #0b6133;
+}
+
+.estado-falta {
+  background: #ffe6e6;
+  color: #b33c3c;
+}
+
+.estado-justificada {
+  background: #fef3d7;
+  color: #9b6b1f;
+}
+
+.estado-retardo {
+  background: #ffedd5;
+  color: #b45f2a;
+}
+
+.estado-default {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* ===== FOOTER ===== */
+.tabla-footer {
+  padding: 1rem 1.8rem;
+  background: #fafcff;
+  border-top: 1px solid #e8eef7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.estadisticas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #3d5779;
+}
+
+.estadisticas span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.estadisticas .separator {
+  color: #c5d5e8;
+  margin: 0 4px;
+}
+
+/* ===== TABLA VACÍA ===== */
+.tabla-vacia {
+  background: white;
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 1px solid #e8eef7;
+  box-shadow: 0 4px 12px rgba(0, 20, 40, 0.04);
+}
+
+.tabla-vacia i {
+  font-size: 3.5rem;
+  color: #c5d5e8;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.tabla-vacia p {
+  font-size: 1.2rem;
+  color: #3d5779;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.tabla-vacia span {
+  color: #7a9bc7;
+  font-size: 0.95rem;
+  display: block;
+}
+
+.tabla-vacia i:first-child {
+  font-size: 3.5rem;
+  color: #c5d5e8;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .tabla-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  table tbody td,
+  table thead th {
+    padding: 0.7rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabla-container {
+    border-radius: 16px;
+  }
+
+  .tabla-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .tabla-header h2 {
+    font-size: 1rem;
+  }
+
+  .registros-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+  }
+
+  table {
+    font-size: 0.8rem;
+    min-width: 600px;
+  }
+
+  table tbody td,
+  table thead th {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .col-matricula {
+    font-size: 0.75rem;
+  }
+
+  .estado-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.8rem;
+  }
+
+  .tabla-footer {
+    padding: 0.8rem 1.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .estadisticas {
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+
+  .estadisticas .separator {
+    display: none;
+  }
+
+  .tabla-vacia {
+    padding: 3rem 1.5rem;
+  }
+
+  .tabla-vacia p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabla-header {
+    padding: 0.6rem 1rem;
+  }
+
+  .tabla-header h2 {
+    font-size: 0.9rem;
+  }
+
+  table {
+    font-size: 0.7rem;
+    min-width: 500px;
+  }
+
+  table tbody td,
+  table thead th {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .col-index {
+    width: 30px;
+    font-size: 0.7rem;
+  }
+
+  .col-matricula {
+    font-size: 0.7rem;
+  }
+
+  .col-grupo .grupo-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.6rem;
+  }
+
+  .estado-badge {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.6rem;
+    gap: 4px;
+  }
+
+  .estado-badge i {
+    font-size: 0.6rem;
+  }
+
+  .col-fecha {
+    font-size: 0.65rem;
+  }
+
+  .tabla-vacia i:first-child {
+    font-size: 2.5rem;
+  }
+
+  .tabla-vacia p {
+    font-size: 0.9rem;
+  }
+
+  .tabla-vacia span {
+    font-size: 0.8rem;
+  }
+}

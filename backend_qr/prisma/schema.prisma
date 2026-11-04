@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ======================================
+// MODELO ALUMNO
+// ======================================
+
+model Alumno {
+  id              String  @id @default(uuid())
+  matricula       String  @unique
+  nombre          String
+  apellidoPaterno String
+  apellidoMaterno String?
+  correo          String?
+  telefono        String?
+  activo          Boolean @default(true)
+  grupoId         String
+  tutorId         String?
+  usuarioId       String? @unique
+
+  Grupo   Grupo    @relation(fields: [grupoId], references: [id])
+  Tutor   Tutor?   @relation(fields: [tutorId], references: [id])
+  Usuario Usuario? @relation(fields: [usuarioId], references: [id])
+
+  asistencias Asistencia[]
+  Incidencia  Incidencia[]
+}
+
+// ======================================
+// MODELO MAESTRO
+// ======================================
+
+model Maestro {
+  id             String  @id @default(uuid())
+  numeroEmpleado String  @unique
+  nombre         String
+  correo         String?
+  telefono       String?
+  usuarioId      String? @unique
+
+  Usuario             Usuario?              @relation(fields: [usuarioId], references: [id])
+  MaestroMateriaGrupo MaestroMateriaGrupo[]
+}
+
+// ======================================
+// MODELO CARRERA
+// ======================================
+
+model Carrera {
+  id     String @id @default(uuid())
+  nombre String
+  clave  String @unique
+}
+
+// ======================================
+// MODELO ASISTENCIA
+// ======================================
+
+model Asistencia {
+  id            String           @id @default(uuid())
+  alumnoId      String
+  sesionQRId    String
+  fechaHora     DateTime         @default(now())
+  estado        EstadoAsistencia
+  observaciones String?
+
+  alumno   Alumno   @relation(fields: [alumnoId], references: [id])
+  SesionQR SesionQR @relation(fields: [sesionQRId], references: [id])
+}
+
+// ======================================
+// MODELO GRUPO
+// CORRECCIÓN DE RELACIONES
+// ======================================
+
+model Grupo {
+  id           String @id
+  nombre       String
+  cuatrimestre Int
+  turno        String
+
+  Alumno              Alumno[]
+  MaestroMateriaGrupo MaestroMateriaGrupo[]
+}
+
+// ======================================
+// MODELO HORARIO
+// ======================================
+
+model Horario {
+  id         String @id
+  diaSemana  String
+  horaInicio String
+  horaFin    String
+  mmgId      String
+
+  MaestroMateriaGrupo MaestroMateriaGrupo @relation(fields: [mmgId], references: [id])
+}
+
+// ======================================
+// MODELO INCIDENCIA
+// ======================================
+
+model Incidencia {
+  id          String   @id
+  tipo        String
+  descripcion String?
+  fecha       DateTime @default(now())
+  alumnoId    String
+
+  Alumno Alumno @relation(fields: [alumnoId], references: [id])
+}
+
+// ======================================
+// MODELO LOG
+// ======================================
+
+model Log {
+  id        String   @id
+  accion    String
+  fecha     DateTime @default(now())
+  usuarioId String
+
+  Usuario Usuario @relation(fields: [usuarioId], references: [id])
+}
+
+// ======================================
+// MODELO MAESTRO MATERIA GRUPO
+// ======================================
+
+model MaestroMateriaGrupo {
+  id        String @id
+  maestroId String
+  materiaId String
+  grupoId   String
+
+  Horario Horario[]
+
+  Grupo   Grupo   @relation(fields: [grupoId], references: [id])
+  Maestro Maestro @relation(fields: [maestroId], references: [id])
+  Materia Materia @relation(fields: [materiaId], references: [id])
+
+  SesionQR SesionQR[]
+}
+
+// ======================================
+// MODELO MATERIA
+// ======================================
+
+model Materia {
+  id           String @id
+  nombre       String
+  clave        String @unique
+  cuatrimestre Int
+
+  MaestroMateriaGrupo MaestroMateriaGrupo[]
+}
+
+// ======================================
+// MODELO SESION QR
+// ======================================
+
+model SesionQR {
+  id           String   @id
+  tokenQR      String   @unique
+  fecha        DateTime
+  horaGenerada DateTime @default(now())
+  expiracion   DateTime
+  activa       Boolean  @default(true)
+  mmgId        String
+
+  Asistencia Asistencia[]
+
+  MaestroMateriaGrupo MaestroMateriaGrupo @relation(fields: [mmgId], references: [id])
+}
+
+// ======================================
+// MODELO TUTOR
+// ======================================
+
+model Tutor {
+  id       String  @id
+  nombre   String
+  telefono String?
+  correo   String?
+
+  Alumno Alumno[]
+}
+
+// ======================================
+// MODELO USUARIO
+// ======================================
+
+model Usuario {
+  id        String   @id
+  nombre    String
+  correo    String   @unique
+  password  String
+  rol       Rol
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  Alumno  Alumno?
+  Log     Log[]
+  Maestro Maestro?
+}
+
+// ======================================
+// ENUMERACIONES
+// ======================================
+
+enum EstadoAsistencia {
+  PRESENTE
+  RETARDO
+  FALTA
+  JUSTIFICADA
+}
+
+enum Rol {
+  ADMIN
+  MAESTRO
+  ALUMNO
+}
