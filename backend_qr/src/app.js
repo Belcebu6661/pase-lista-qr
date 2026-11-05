@@ -32,6 +32,7 @@ const allowedOrigins = [
   "http://192.168.137.76:3000",
   "http://192.168.137.76:5173",
   "http://localhost:8081",
+  "https://pase-lista-frontend.onrender.com",
   "https://0hffwew-anonymous-8081.exp.direct",
 ];
 
