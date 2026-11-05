@@ -38,7 +38,7 @@ function Alumnos() {
 
     const obtenerAlumnos = async () => {
         try {
-            const respuesta = await axios.get("http://localhost:3000/api/alumnos");
+            const respuesta = await axios.get("https://pase-lista-qr.onrender.com/api/alumnos");
             setAlumnos(respuesta.data.data || []);
         } catch (error) {
             console.log("Error al cargar alumnos:", error);
@@ -47,7 +47,7 @@ function Alumnos() {
 
     const obtenerGrupos = async () => {
         try {
-            const respuesta = await axios.get("http://localhost:3000/api/grupos");
+            const respuesta = await axios.get("https://pase-lista-qr.onrender.com/api/grupos");
             setGrupos(respuesta.data.data || []);
         } catch (error) {
             console.log("Error al cargar grupos:", error);
@@ -100,10 +100,10 @@ function Alumnos() {
         e.preventDefault();
         try {
             if (modoEdicion) {
-                await axios.put(`http://localhost:3000/api/alumnos/${alumnoActualId}`, formulario);
+                await axios.put(`https://pase-lista-qr.onrender.com/api/alumnos/${alumnoActualId}`, formulario);
                 alert("Alumno actualizado correctamente");
             } else {
-                await axios.post("http://localhost:3000/api/alumnos", formulario);
+                await axios.post("https://pase-lista-qr.onrender.com/api/alumnos", formulario);
                 alert("Alumno creado correctamente");
             }
 
@@ -118,7 +118,7 @@ function Alumnos() {
     const eliminarAlumno = async (id) => {
         if (!window.confirm("¿Estás seguro de que deseas eliminar este alumno?")) return;
         try {
-            await axios.delete(`http://localhost:3000/api/alumnos/${id}`);
+            await axios.delete(`https://pase-lista-qr.onrender.com/api/alumnos/${id}`);
             alert("Alumno eliminado correctamente");
             obtenerAlumnos();
         } catch (error) {
@@ -210,7 +210,7 @@ const confirmarImportacionMasiva = async () => {
 
     try {
         const respuesta = await axios.post(
-            "http://localhost:3000/api/alumnos/carga-masiva",
+            "https://pase-lista-qr.onrender.com/api/alumnos/carga-masiva",
             {
                 alumnos: validos.map((alumno) => ({
                     matricula: alumno.matricula.trim(),
