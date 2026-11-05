@@ -4,76 +4,42 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-function Register() {
+function Login() {
     const navigate = useNavigate();
 
-    // Datos del formulario
-    const [nombre, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmar, setConfirmar] = useState("");
-    const [rol, setRol] = useState("ALUMNO");
-
-    // Mensajes y estado
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState("");
     const [cargando, setCargando] = useState(false);
 
-    const registrar = async (e) => {
+    const iniciarSesion = async (e) => {
         e.preventDefault();
-
-        setError(null);
-        setSuccess(null);
-
-        // Validar campos
-        if (!nombre.trim() || !correo.trim() || !password) {
-            setError("Completa todos los campos.");
-            return;
-        }
-
-        // Validar contraseñas
-        if (password !== confirmar) {
-            setError("Las contraseñas no coinciden.");
-            return;
-        }
-
+        setError("");
         setCargando(true);
 
         try {
-            // Conexión al backend mediante api.js
-            const response = await api.post("/auth/register", {
-                nombre: nombre.trim(),
+            const response = await api.post("/auth/login", {
                 email: correo.trim(),
-                password: password,
-                rol: rol
+                password
             });
 
-            if (response.data.success) {
-                setSuccess(
-                    "Cuenta creada correctamente. Redirigiendo al inicio de sesión..."
-                );
+            const token = response.data.token;
 
-                setTimeout(() => {
-                    navigate("/");
-                }, 2000);
-            } else {
-                setError(
-                    response.data.message ||
-                    "No se pudo registrar la cuenta."
-                );
+            if (!token) {
+                setError("El servidor no devolvió un token.");
+                return;
             }
+
+            localStorage.setItem("token", token);
+            navigate("/dashboard", { replace: true });
 
         } catch (err) {
-            console.error("Error al registrar:", err);
+            console.error("Error al iniciar sesión:", err);
 
-            if (err.response?.data) {
-                setError(
-                    err.response.data.message ||
-                    "Ocurrió un error al registrar la cuenta."
-                );
-            } else {
-                setError("Error de conexión con el servidor.");
-            }
+            setError(
+                err.response?.data?.message ||
+                "No se pudo iniciar sesión. Verifica tus datos."
+            );
         } finally {
             setCargando(false);
         }
@@ -82,47 +48,19 @@ function Register() {
     return (
         <div className="login-container">
             <div className="login-card">
-
-                <h1>Crear Cuenta</h1>
+                <h1>Iniciar Sesión</h1>
 
                 <p className="subtitulo">
-                    Completa los datos para registrarte
+                    Sistema de Asistencia QR
                 </p>
 
                 {error && (
-                    <p
-                        style={{
-                            color: "red",
-                            fontSize: "14px",
-                            marginBottom: "10px"
-                        }}
-                    >
+                    <p style={{ color: "red" }}>
                         {error}
                     </p>
                 )}
 
-                {success && (
-                    <p
-                        style={{
-                            color: "green",
-                            fontSize: "14px",
-                            marginBottom: "10px"
-                        }}
-                    >
-                        {success}
-                    </p>
-                )}
-
-                <form onSubmit={registrar}>
-
-                    <input
-                        type="text"
-                        placeholder="Nombre completo"
-                        value={nombre}
-                        onChange={(e) => setNombre(e.target.value)}
-                        required
-                    />
-
+                <form onSubmit={iniciarSesion}>
                     <input
                         type="email"
                         placeholder="Correo electrónico"
@@ -139,56 +77,31 @@ function Register() {
                         required
                     />
 
-                    <input
-                        type="password"
-                        placeholder="Confirmar contraseña"
-                        value={confirmar}
-                        onChange={(e) => setConfirmar(e.target.value)}
-                        required
-                    />
-
-                    <select
-                        value={rol}
-                        onChange={(e) => setRol(e.target.value)}
-                        required
-                        style={{
-                            marginBottom: "15px",
-                            width: "100%",
-                            padding: "10px",
-                            borderRadius: "5px",
-                            border: "1px solid #ccc"
-                        }}
-                    >
-                        <option value="ALUMNO">Alumno</option>
-                        <option value="MAESTRO">Maestro</option>
-                    </select>
-
-                    <button
-                        type="submit"
-                        disabled={cargando || Boolean(success)}
-                    >
-                        {cargando
-                            ? "Registrando..."
-                            : "Crear Cuenta"}
+                    <button type="submit" disabled={cargando}>
+                        {cargando ? "Ingresando..." : "Iniciar Sesión"}
                     </button>
 
                     <button
                         type="button"
-                        className="register-button"
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/register")}
                     >
-                        Volver al inicio de sesión
+                        Crear Cuenta
                     </button>
 
+                    <button
+                        type="button"
+                        onClick={() => navigate("/forgot-password")}
+                    >
+                        ¿Olvidaste tu contraseña?
+                    </button>
                 </form>
 
                 <p className="footer">
                     Universidad Tecnológica del Valle del Mezquital
                 </p>
-
             </div>
         </div>
     );
 }
 
-export default Register;
+export default Login;
