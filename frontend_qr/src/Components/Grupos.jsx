@@ -23,7 +23,7 @@ function Grupos() {
 const obtenerGrupos = async () => {
     try {
         const respuesta = await axios.get(
-            "http://localhost:3000/api/grupos"
+            "https://pase-lista-qr.onrender.com/api/grupos"
         );
 
         // Verificar qué está enviando el backend
@@ -83,7 +83,7 @@ const guardarGrupo = async (e) => {
         console.log("Enviando grupo:", datosAEnviar);
 
         const respuesta = await axios.post(
-            "http://localhost:3000/api/grupos",
+            "https://pase-lista-qr.onrender.com/api/grupos",
             datosAEnviar
         );
 
