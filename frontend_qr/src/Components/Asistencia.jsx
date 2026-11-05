@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import RegistrarAsistencia from "./RegistrarAsistencia"; 
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://pase-lista-qr.onrender.com/api";
 
 const ESTILOS_ESTADO = {
     PRESENTE: { dot: "bg-emerald-500", text: "text-emerald-700 bg-emerald-50" },
