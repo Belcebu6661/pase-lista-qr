@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Plus, X, Edit, Trash2, Search, Filter, QrCode, Upload, CheckCircle, AlertTriangle } from "lucide-react";
 import * as XLSX from "xlsx";
+import { QRCodeSVG } from "qrcode.react";
 
 function Alumnos() {
     const [alumnos, setAlumnos] = useState([]);
@@ -47,7 +48,7 @@ function Alumnos() {
 
     const obtenerGrupos = async () => {
         try {
-            const respuesta = await axios.get("https://pase-lista-qr.onrender.com/api/grupos");
+            const respuesta = await axios.get("http://localhost:3000/api/grupos");
             setGrupos(respuesta.data.data || []);
         } catch (error) {
             console.log("Error al cargar grupos:", error);
@@ -100,10 +101,10 @@ function Alumnos() {
         e.preventDefault();
         try {
             if (modoEdicion) {
-                await axios.put(`https://pase-lista-qr.onrender.com/api/alumnos/${alumnoActualId}`, formulario);
+                await axios.put(`http://localhost:3000/api/alumnos/${alumnoActualId}`, formulario);
                 alert("Alumno actualizado correctamente");
             } else {
-                await axios.post("https://pase-lista-qr.onrender.com/api/alumnos", formulario);
+                await axios.post("http://localhost:3000/api/alumnos", formulario);
                 alert("Alumno creado correctamente");
             }
 
@@ -118,7 +119,7 @@ function Alumnos() {
     const eliminarAlumno = async (id) => {
         if (!window.confirm("¿Estás seguro de que deseas eliminar este alumno?")) return;
         try {
-            await axios.delete(`https://pase-lista-qr.onrender.com/api/alumnos/${id}`);
+            await axios.delete(`http://localhost:3000/api/alumnos/${id}`);
             alert("Alumno eliminado correctamente");
             obtenerAlumnos();
         } catch (error) {
@@ -210,7 +211,7 @@ const confirmarImportacionMasiva = async () => {
 
     try {
         const respuesta = await axios.post(
-            "https://pase-lista-qr.onrender.com/api/alumnos/carga-masiva",
+            "http://localhost:3000/api/alumnos/carga-masiva",
             {
                 alumnos: validos.map((alumno) => ({
                     matricula: alumno.matricula.trim(),
@@ -722,25 +723,21 @@ const confirmarImportacionMasiva = async () => {
                         </div>
 
                         <div className="my-4 flex flex-col items-center">
-                            <p className="font-semibold text-slate-700 text-base">
-                                {alumnoSeleccionadoQR.nombre} {alumnoSeleccionadoQR.apellidoPaterno} {alumnoSeleccionadoQR.apellidoMaterno || ""}
-                            </p>
                             <p className="text-xs text-slate-500 mb-4">
                                 Matrícula: <span className="font-mono font-bold text-slate-700">{alumnoSeleccionadoQR.matricula}</span>
                             </p>
 
                             <div className="p-3 bg-white border border-gray-200 rounded-xl shadow-inner inline-block">
-                                <img
-                                    src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(
-                                        `Matrícula: ${alumnoSeleccionadoQR.matricula} \vert{} Nombre:${alumnoSeleccionadoQR.nombre} ${alumnoSeleccionadoQR.apellidoPaterno}${alumnoSeleccionadoQR.apellidoMaterno || ""}`
-                                    )}`}
-                                    alt={`QR de ${alumnoSeleccionadoQR.nombre}`}
-                                    className="w-44 h-44 object-contain"
+                                <QRCodeSVG
+                                    value={String(alumnoSeleccionadoQR.matricula ?? "")}
+                                    size={180}
+                                    level="H"
+                                    marginSize={2}
                                 />
                             </div>
 
                             <p className="text-[11px] text-gray-400 mt-4">
-                                Al escanear este código se obtendrá la matrícula y los datos completos del alumno.
+                                Al escanear este código se obtendrá únicamente el número de matrícula.
                             </p>
                         </div>
 
