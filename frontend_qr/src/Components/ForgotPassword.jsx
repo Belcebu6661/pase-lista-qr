@@ -19,7 +19,7 @@ function ForgotPassword() {
 
         try {
             // Petición POST real a tu nuevo endpoint en el backend
-            const response = await axios.post("http://localhost:3000/api/auth/forgot-password", {
+            const response = await axios.post("https://pase-lista-qr.onrender.com/api/auth/forgot-password", {
                 email: email
             });
 

@@ -11,7 +11,7 @@ import "../styles/Reportes.css";
 // CONFIGURACIÓN DE LA API
 // ==========================================
 
-const API_URL = "http://localhost:3000/api/reportes";
+const API_URL = "https://pase-lista-qr.onrender.com/api/reportes";
 
 const Reportes = () => {
 

@@ -33,7 +33,7 @@ function ResetPassword() {
 
         try {
             // Petición al backend (Endpoint que crearemos en el siguiente paso)
-            const response = await axios.post(`http://localhost:3000/api/auth/reset-password/${token}`, {
+            const response = await axios.post(`https://pase-lista-qr.onrender.com/api/auth/reset-password/${token}`, {
                 nuevaPassword: password
             });
 

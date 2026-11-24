@@ -28,7 +28,7 @@ const BotonesReportes = ({ tipoReporte, setTipoReporte }) => {
         }
       }
 
-      const url = `http://localhost:3000/api/${tipoReporte}/${formato}?${params.toString()}`;
+      const url = `https://pase-lista-qr.onrender.com/api/${tipoReporte}/${formato}?${params.toString()}`;
       
       console.log(`📤 Exportando a ${formato.toUpperCase()}:`, url);
 

@@ -20,7 +20,7 @@ const FiltrosReportes = ({ tipoReporte, setFiltros, onConsultar, loading }) => {
   useEffect(() => {
     const fetchCarreras = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/carreras');
+        const res = await fetch('https://pase-lista-qr.onrender.com/api/carreras');
         if (res.ok) {
           const data = await res.json();
           setCarreras(Array.isArray(data) ? data : []);
@@ -41,7 +41,7 @@ const FiltrosReportes = ({ tipoReporte, setFiltros, onConsultar, loading }) => {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:3000/api/grupos?carreraId=${filtrosLocales.carreraId}`);
+        const res = await fetch(`https://pase-lista-qr.onrender.com/api/grupos?carreraId=${filtrosLocales.carreraId}`);
         if (res.ok) {
           const data = await res.json();
           setGrupos(Array.isArray(data) ? data : []);
@@ -61,7 +61,7 @@ const FiltrosReportes = ({ tipoReporte, setFiltros, onConsultar, loading }) => {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:3000/api/materias?carreraId=${filtrosLocales.carreraId}`);
+        const res = await fetch(`https://pase-lista-qr.onrender.com/api/materias?carreraId=${filtrosLocales.carreraId}`);
         if (res.ok) {
           const data = await res.json();
           setMaterias(Array.isArray(data) ? data : []);
